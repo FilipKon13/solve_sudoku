@@ -2,7 +2,7 @@ import ctypes
 import os
 import numpy as np
 
-dll_path = os.path.abspath("solve.dll")
+dll_path = os.path.abspath(os.path.join("src","solve.dll"))
 lib = ctypes.CDLL(dll_path)
 
 lib.solve_sudoku.argtypes = [ctypes.POINTER(ctypes.c_char)]

@@ -5,8 +5,8 @@ from time import sleep, time
 from os.path import join
 
 from src.util import take_out, get_image
-from src.solve_sudoku_c import solve_sudoku # faster version, but uses c bindings
-# from src.solve_sudoku_py import solve_sudoku
+# from src.solve_sudoku_c import solve_sudoku # faster version, but uses c bindings
+from src.solve_sudoku_py import solve_sudoku
 
 model = tf.keras.models.load_model(join('models','digit_model.h5'))
 
@@ -53,12 +53,12 @@ dif = 47
 
 while True:
     wait_for_signal()
-    sudoku = get_sudoku()
-    print(sudoku)
     st = time()
+    sudoku = get_sudoku()
     solution = solve_sudoku(sudoku)
     end = time()
     print(f"Solving took {end-st} s")
+    print(sudoku)
     print(solution)
     for i in range(9):
         for j in range(9):
