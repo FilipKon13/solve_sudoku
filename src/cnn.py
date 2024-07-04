@@ -1,8 +1,7 @@
-import numpy as np 
 import tensorflow as tf
 from keras.api.models import Sequential
 from keras.api.layers import Conv2D, MaxPooling2D, Flatten, Dense, Rescaling
-
+import os
 from util import IMG_SHAPE
 
 data_dir = "./pictures/"
@@ -20,12 +19,12 @@ print(train_ds.class_names)
 
 model = Sequential(layers=[
     Rescaling(1./255),
-    Conv2D(32,3,activation = 'relu'),
+    Conv2D(32,4,activation = 'relu'),
     MaxPooling2D(),
-    Conv2D(32,3,activation = 'relu'),
+    Conv2D(32,4,activation = 'relu'),
     MaxPooling2D(),
     Flatten(),
-    Dense(128,activation='relu'),
+    Dense(256,activation='relu'),
     Dense(len(train_ds.class_names))]
 )
 
@@ -34,15 +33,14 @@ model.compile(loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=T
               metrics = ['accuracy'])
 
 print("FITTING")
-model.fit(train_ds, validation_data=val_ds, epochs = 5)
+model.fit(train_ds, validation_data=val_ds, epochs = 6)
 print("FITTING DONE")
 
-model.summary()
 print(model.summary())
 
 print("VALIDATION")
 valid_loss, valid_accuracy = model.evaluate(val_ds)
 print(f"Accuracy: {valid_accuracy}\nLoss: {valid_loss}")
 
-model.save('digit_model_v2.h5')
+model.save(os.path.join("models",'digit_model.h5'))
 print("Saved")

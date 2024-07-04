@@ -1,6 +1,6 @@
 class SudokuSolver:
     def __init__(self, tab: list[list[int]]) -> None:
-        self.tab = tab.copy()
+        self.tab = [x.copy() for x in tab]
     
     def _check_row(self, x: int, y: int) -> bool:
         val = self.tab[x][y]

@@ -12,13 +12,15 @@ If not, then you may have to do some adjustments.
 - Window coordinatess - `SUDOKU_REC` variable specifies rectangle where sudoku is located on screen. You can adjust it/verify it works by using `get_image(True)` function from `util.py` - it saves the screenshot to png file,
 - Image resolution - neural network and capturing function assume that whole sudoku has dimensions 528 by 528 pixels. If it has not, then you need to change appropriate constant in `util.py` and train neural network in `cnn.py`.
 
+You can also run this in manual mode, when you can place sudoku on standard input and program wil solve it (usefull if network makes singular mistakes, you can correct single digits manually).
+
 ## How to go faster
 
 With harder puzzles you may notice that it takes a while to figure out solution, even after capturing and parsing what's going on on the screen. Well, it's because sudoku-solving function is really basic backtrack and its written in Python (look at `solve_sudoku_py.py` file).
 
-I wanted to do something with C bindings (and to do it faster), so there is similar logic implemented in C in `solve.c` and bindings created in `solve_sudoku_c.py` file. To use it you need to compile `solve.c` to shared library (I did not posted binary on repo - do NOT trust binaries in random repos).
+I wanted to do something with C bindings (and to go faster), so there is similar logic implemented in C in `solve.c` and bindings created in `solve_sudoku_c.py` file. To use it you need to compile `solve.c` to shared library (I did not posted binary on repo - do NOT trust binaries in random repos).
 
-Provided `Makefile` and `solve_sudoku_c.py` files were prepared for Windows machines (Windows + WSL here - pynput does not work well on WSL's side of the things on my version). To run this on diffent OS, you need to change extensions/loading strategies accordingly e.g. for Linux, changing `.dll` to `.so` (canonical shared library extension) in both files should be enough.
+Provided `Makefile`, `solve.c` and `solve_sudoku_c.py` files were prepared for Windows machines (Windows + WSL here - pynput does not work well on WSL's side of the things on my version). To run this on diffent OS, you need to change extensions/loading strategies accordingly e.g. for Linux, changing `.dll` to `.so` (canonical shared library extension) in both files and using appropriate calling convention in `solve.c` should be enough.
 
 ## How it was done
 
@@ -43,4 +45,4 @@ Single iteration, i.e. parsing table + solving sudoku ('hard' instance) takes le
 | Solving | 0.0149s |
 | In total | 0.9834s |
 
-There is definitely room for improvement (e.g. capturing faster, smaller NN), but at the moment even putting number into browser takes significant time in comparison.
+There is definitely room for improvement (e.g. capturing faster, smaller NN), but at the moment even putting numbers into browser takes significant time in comparison.

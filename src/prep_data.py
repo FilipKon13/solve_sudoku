@@ -27,12 +27,15 @@ def refresh():
     mouse.position = (756, 297)
     mouse.click(Button.left)
 
-print("Prepare")
-sleep(10)
-print("Start")
-for i in range(100):
-    print(i)
-    refresh()
-    sleep(5)
+# print("Prepare")
+# sleep(10)
+# print("Start")
+# for i in range(100):
+#     print(i)
+#     refresh()
+#     sleep(5)
+#     grab_tiles()
+
+if __name__ == "__main__":
     grab_tiles()
 
